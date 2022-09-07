@@ -1,4 +1,4 @@
-# my-app2
+# My-ROS-Project
 
 ## Project setup
 ```
