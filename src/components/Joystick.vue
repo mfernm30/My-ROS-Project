@@ -118,6 +118,16 @@ export default {
             this.ros.on("connection", () => {
                 this.connected = true;
                 console.log("Connection to ROSBridge established!");
+                
+                let topic = new ROSLIB.Topic({
+                    ros: this.ros,
+                    name: '/odom',
+                    messageType: 'nav_msgs/Odometry'
+                })
+                topic.subscribe((message) => {
+                    this.position = message.pose.pose.position
+                })
+
                 this.pubInterval = setInterval(this.publish, 100);
             });
             this.ros.on("error", (error) => {
@@ -133,7 +143,8 @@ export default {
         publish: function () {
             let topic = new ROSLIB.Topic({
                 ros: this.ros,
-                name: "/cmd_vel",
+                //name: "/mobile_base_controller/cmd_vel",// Tiago Compatibility
+                name: "/cmd_vel",// RB1 Compatibility
                 messageType: "geometry_msgs/Twist"
             });
             let message = new ROSLIB.Message({
@@ -148,7 +159,7 @@ export default {
         sendCommand: function () {
             let topic = new ROSLIB.Topic({
                 ros: this.ros,
-                name: "/cmd_vel",
+                name: "/mobile_base_controller/cmd_vel",
                 messageType: "geometry_msgs/Twist"
             });
             let message = new ROSLIB.Message({
@@ -197,4 +208,3 @@ export default {
     }
 }
 </script>
-

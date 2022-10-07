@@ -1,5 +1,5 @@
 <template>
-    
+
     <div class="container">
 
         <div class="d-flex flex-column h-100">
@@ -129,7 +129,8 @@ export default {
         publish: function () {
             let topic = new ROSLIB.Topic({
                 ros: this.ros,
-                name: "/cmd_vel",
+                //name: "/mobile_base_controller/cmd_vel",// Tiago Compatibility
+                name: "/cmd_vel",// RB1 Compatibility
                 messageType: "geometry_msgs/Twist"
             });
             let message = new ROSLIB.Message({
@@ -195,7 +196,8 @@ export default {
                 host: domain,
                 width: 500,
                 height: 300,
-                topic: '/camera/image_raw',
+                //topic: '/xtion/rgb/image_raw',// Tiago Compatibility
+                topic: '/camera/image_raw',// RB1 Compatibility
                 ssl: false,
             })
         },
@@ -208,6 +210,8 @@ export default {
                 host: domain,
                 width: 500,
                 height: 300,
+                type: 'vp8',
+                //topic: '/xtion/depth/image', // Tiago Compatibility
                 topic: '/camera/depth/image_raw',
                 ssl: false,
             })

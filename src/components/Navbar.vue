@@ -22,7 +22,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn text router-link to="/" >
+      <v-btn text router-link to="/">
         <span>Exit</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>

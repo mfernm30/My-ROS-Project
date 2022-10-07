@@ -10,8 +10,9 @@
     -khtml-user-select: none;
     -webkit-user-select: none;
 }
-.micolor{
-    color :rgba(0, 0, 0, 30%)
+
+.micolor {
+    color: rgba(0, 0, 0, 30%)
 }
 
 #dragCircle {

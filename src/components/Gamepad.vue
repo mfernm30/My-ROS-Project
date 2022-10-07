@@ -91,9 +91,11 @@ export default {
         mapGridClient: null,
         interval: null,
         menu_title: "Connection",
-        position: { x: 0, y: 0, z: 0},
+        position: { x: 0, y: 0, z: 0 },
+        counter_x: 0,
+        counter_z: 0
     }),
-    // helper methods to connect to ROS
+
     methods: {
         connect: function () {
             this.loading = true
@@ -113,6 +115,8 @@ export default {
                 topic.subscribe((message) => {
                     this.position = message.pose.pose.position
                 })
+
+                setInterval(this.publish_cmd, 30)
             })
             this.ros.on('error', (error) => {
                 this.logs.unshift((new Date()).toTimeString() + ` - Error: ${error}`)
@@ -124,55 +128,46 @@ export default {
                 document.getElementById('map').innerHTML = ''
             })
         },
+
+        publish_cmd: function () {
+            this.message = new ROSLIB.Message({
+                linear: { x: this.counter_x, y: 0, z: 0, },
+                angular: { x: 0, y: 0, z: this.counter_z, },
+            })
+            this.topic.publish(this.message);
+        },
+
         disconnect: function () {
             this.ros.close()
         },
         setTopic: function () {
             this.topic = new ROSLIB.Topic({
                 ros: this.ros,
-                name: '/cmd_vel',
+                //name: "/mobile_base_controller/cmd_vel",// Tiago Compatibility
+                name: "/cmd_vel",// RB1 Compatibility
                 messageType: 'geometry_msgs/Twist'
             })
         },
         forward: function () {
-            this.message = new ROSLIB.Message({
-                linear: { x: 1, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0, },
-            })
             this.setTopic()
-            this.topic.publish(this.message)
+            this.counter_x = this.counter_x + 0.1;
         },
         stop: function () {
-            this.message = new ROSLIB.Message({
-                linear: { x: 0, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0, },
-            })
             this.setTopic()
-            this.topic.publish(this.message)
+            this.counter_x = 0;
+            this.counter_z = 0;
         },
         backward: function () {
-            this.message = new ROSLIB.Message({
-                linear: { x: -1, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0, },
-            })
             this.setTopic()
-            this.topic.publish(this.message)
+            this.counter_x = this.counter_x - 0.1;
         },
         turnLeft: function () {
-            this.message = new ROSLIB.Message({
-                linear: { x: 0.5, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: 0.5, },
-            })
             this.setTopic()
-            this.topic.publish(this.message)
+            this.counter_z = this.counter_z + 0.1;
         },
         turnRight: function () {
-            this.message = new ROSLIB.Message({
-                linear: { x: 0.5, y: 0, z: 0, },
-                angular: { x: 0, y: 0, z: -0.5, },
-            })
             this.setTopic()
-            this.topic.publish(this.message)
+            this.counter_z = this.counter_z - 0.1;
         }
     },
     mounted() {

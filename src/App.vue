@@ -30,5 +30,5 @@ export default {
 </script>
 
 <style>
-  @import './assets/styles/joystick.css';
+@import './assets/styles/joystick.css';
 </style>

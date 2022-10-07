@@ -8,13 +8,13 @@
 import Videocam from '@/components/Videocam.vue';
 
 export default {
-  
+
   name: 'VideocamView',
 
   components: {
     Videocam
   },
-  
+
   data() {
     return {
 

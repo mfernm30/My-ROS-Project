@@ -1,5 +1,5 @@
 <template>
- <Joystick />
+  <Joystick />
 </template>
 
 <script>
@@ -10,9 +10,9 @@ export default {
   name: 'JoystickView',
   components: {
     Joystick
-},
-  data(){
-    return{
+  },
+  data() {
+    return {
 
     }
   },
