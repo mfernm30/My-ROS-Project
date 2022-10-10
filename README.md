@@ -32,7 +32,7 @@ Author: Manuel Fernández Miguélez, mfernm30@gmail.com
 ![Design 1](Documentation/images/Design_1.png)
 ![Design 2](Documentation/images/Design_2.png)
 ### Arquitecture
-![Scheme](Documentation/images/Architecture_Scheme.png)
+![Scheme](Documentation/images/Architecture_Scheme.jpg)
 
 ## 3. Dependencies
 - Ubuntu 20.04.5 LTS (Focal Fossa): [installation](https://releases.ubuntu.com/focal/).
